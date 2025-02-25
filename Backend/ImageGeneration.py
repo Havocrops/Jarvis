@@ -24,7 +24,7 @@ def open_images(prompt):
         except IOError:
             print(f"Unable to open {image_path}")
 
-API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-x1-base-1.0"
+API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-3.5-large"
 headers = {"Authorization": f"Bearer {get_key('.env', 'HuggingFaceAPIKey')}"}
 
 async def query(payload):
@@ -36,7 +36,7 @@ async def generate_images(prompt: str):
 
     for _ in range(4):
         payload = {
-            "input": f"{prompt}, quality=4K, sharpness=maximum, Ultra High details, high resolution, seed={randint(0, 1000000)}"
+            "inputs": f"{prompt}, quality=4K, sharpness=maximum, Ultra High details, high resolution, seed={randint(0, 1000000)}"
         }
         task = asyncio.create_task(query(payload))  # Create individual task for each query
         tasks.append(task)  # Append task to the list
