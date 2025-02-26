@@ -76,7 +76,7 @@ def showTextToScreen(Text):
 
 class ChatSection(QWidget):
     def __init__(self):
-        super(ChatSection,self).__init__()
+        super(ChatSection, self).__init__()
         layout = QVBoxLayout(self)
         layout.setContentsMargins(-10, 40, 40, 100)
         layout.setSpacing(-100)
@@ -86,32 +86,37 @@ class ChatSection(QWidget):
         self.chat_text_edit.setFrameStyle(QFrame.NoFrame)
         layout.addWidget(self.chat_text_edit)
         self.setStyleSheet("background-color: black;")
-        layout.setSizeConstraint(QVBoxLayout.setDefaultConstraint)
+        layout.setSizeConstraint(QVBoxLayout.SetDefaultConstraint)
         layout.setStretch(1, 1)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
+        
         text_color = QColor(Qt.blue)
         text_color_text = QTextCharFormat()
-        text_color_text.setForeground(text_color_text)
+        text_color_text.setForeground(text_color)  # Corrected line
         self.chat_text_edit.setCurrentCharFormat(text_color_text)
-        self.git_label = QLabel()
+        
+        self.gif_label = QLabel()
         self.gif_label.setStyleSheet("border: none;")
         movie = QMovie(GraphicsDirectoryPath('Jarvis.gif'))
         max_gif_size_W = 480
         max_gif_size_H = 270
-        movie.setScaledSize(QSize(max_gif_size_W,max_gif_size_H))
-        self.gif_label.SetAlignment(Qt.AlignRight | Qt.AlignBottom)
+        movie.setScaledSize(QSize(max_gif_size_W, max_gif_size_H))
+        self.gif_label.setAlignment(Qt.AlignRight | Qt.AlignBottom)
         self.gif_label.setMovie(movie)
         movie.start()
         layout.addWidget(self.gif_label)
+        
         self.label = QLabel("")
-        self.label.setStyleSheet("color: white; font-size:10px; margin-right: 195px, border: none; margin-top: -30px")
+        self.label.setStyleSheet("color: white; font-size:10px; margin-right: 195px; border: none; margin-top: -30px")
         self.label.setAlignment(Qt.AlignRight)
         layout.addWidget(self.label)
         layout.setSpacing(-10)
         layout.addWidget(self.gif_label)
+        
         font = QFont()
         font.setPointSize(13)
         self.chat_text_edit.setFont(font)
+        
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.loadMessages)
         self.timer.timeout.connect(self.SpeechRecogText)
@@ -154,23 +159,24 @@ class ChatSection(QWidget):
                 background: none;
             }
      """)
+
     def loadMessages(self):
         global old_chat_message
 
         with open(TempDirectoryPath('Responses.data'), "r", encoding='utf-8') as file:
             messages = file.read()
 
-            if None ==messages:
+            if None == messages:
                 pass
 
-            elif len(messages)<=1:
+            elif len(messages)<= 1:
                 pass
 
-            elif str(old_chat_message)==str(messages):
+            elif str(old_chat_message) == str(messages):
                 pass
 
             else:
-                self.addMessage(message=messages,color='White')
+                self.addMessage(message=messages, color='White')
                 old_chat_message = messages
 
     def SpeechRecogText(self):
@@ -252,8 +258,9 @@ class initialScreen(QWidget):
 
     def load_icon(self, path, width=60, height=60):
         pixmap = QPixmap(path)
-        new_pixmap = QPixmap.scaled(width, height)
+        new_pixmap = pixmap.scaled(width, height)  # Corrected here
         self.icon_label.setPixmap(new_pixmap)
+
 
     def toggle_icon(self, event=None):
         if self.toggled:
@@ -328,7 +335,7 @@ class CustomTopBar(QWidget):
         title_label = QLabel(f" {str(Assistantname).capitalize()} AI  ")
         title_label.setStyleSheet("color:black; font-size: 18px;; background-color:white")
         home_button.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
-        message_button.clicked.connect(lambda: self.stacked_widget.setCurrebtIndex(1))
+        message_button.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(1))
         layout.addWidget(title_label)
         layout.addStretch(1)
         layout.addWidget(home_button)
