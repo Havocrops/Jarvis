@@ -38,20 +38,20 @@ def QueryModifier(Query):
 
     return new_query.capitalize()
 
-def SetMicrophoneStatus(command):
+def SetMicrophoneStatus(Command):
     with open(rf'{TempDirPath}\Mic.data', "w", encoding='utf-8') as file:
-        file.write(command)
+        file.write(Command)
 
 def GetMicrophoneStatus():
     with open(rf'{TempDirPath}\Mic.data', "r", encoding='utf-8') as file:
         Status = file.read()
     return Status
 
-def SetMicrophoneStatus(command):
+def SetAssistantStatus(Status):
     with open(rf'{TempDirPath}\Status.data', "w", encoding='utf-8') as file:
-        file.write(command)
+        file.write(Status)
 
-def GetMicrophoneStatus():
+def GetAssistantStatus():
     with open(rf'{TempDirPath}\Status.data', "r", encoding='utf-8') as file:
         Status = file.read()
     return Status
@@ -72,7 +72,7 @@ def TempDirectoryPath(Filename):
 
 def showTextToScreen(Text):
     with open(rf'{TempDirPath}\Responses.data', "w", encoding='utf-8') as file:
-        file.wite(Text)
+        file.write(Text)
 
 class ChatSection(QWidget):
     def __init__(self):
