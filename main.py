@@ -15,6 +15,7 @@ from Backend.Automation import Automation
 from Backend.SpeechToText import SpeechRecognition
 from Backend.Chatbot import ChatBot
 from Backend.TextToSpeech import TextToSpeech
+from Backend.ImageGeneration import GenerateImages
 from dotenv import dotenv_values
 from asyncio import run
 from time import sleep
@@ -72,7 +73,7 @@ def ShowChatsOnGUI():
 
 def InitialExecution():
     SetMicrophoneStatus("False")
-    showTextToScreen("")
+    ShowTextToScreen("")
     ShowDefaultChatIfNoChats()
     ChatLogIntegration()
     ShowChatsOnGUI()
@@ -142,7 +143,7 @@ def MainExecution():
                 SetAssistantStatus("Thinking ... ")
                 QueryFinal = Queries.replace("general ","")
                 Answer = ChatBot(QueryModifier(QueryFinal))
-                showTextToScreen(f"{Assistantname} : {Answer}")
+                ShowTextToScreen(f"{Assistantname} : {Answer}")
                 SetAssistantStatus("Answering ... ")
                 TextToSpeech(Answer)
                 return True
