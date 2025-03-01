@@ -15,7 +15,6 @@ from Backend.Automation import Automation
 from Backend.SpeechToText import SpeechRecognition
 from Backend.Chatbot import ChatBot
 from Backend.TextToSpeech import TextToSpeech
-from Backend.ImageGeneration import GenerateImages
 from dotenv import dotenv_values
 from asyncio import run
 from time import sleep
