@@ -1,7 +1,7 @@
 from Frontend.GUI import(
     GraphicalUserInterface,
     SetAssistantStatus,
-    showTextToScreen,
+    ShowTextToScreen,
     TempDirectoryPath,
     SetMicrophoneStatus,
     AnswerModifier,
@@ -87,8 +87,8 @@ def MainExecution():
 
     SetAssistantStatus("Listening... ")
     Query = SpeechRecognition()
-    showTextToScreen(f"{Username} : {Query}")
-    showTextToScreen("Thinking... ")
+    ShowTextToScreen(f"{Username} : {Query}")
+    SetAssistantStatus("Thinking... ")
     Decision = FirstLayerDMM(Query)
 
     print("")
@@ -130,7 +130,7 @@ def MainExecution():
     if G and R or R:
         SetAssistantStatus("Searching ...")
         Answer = RealtimeSearchEngine(QueryModifier(Mearged_query))
-        showTextToScreen(f"{Assistantname} : {Answer}")
+        ShowTextToScreen(f"{Assistantname} : {Answer}")
         SetAssistantStatus("Answering ... ")
         TextToSpeech(Answer)
         return True
@@ -151,7 +151,7 @@ def MainExecution():
                 SetAssistantStatus("Searching ... ")
                 QueryFinal = Queries.replace("realtime ","")
                 Answer = RealtimeSearchEngine(QueryModifier(QueryFinal))
-                showTextToScreen(f"{Assistantname} : {Answer}")
+                ShowTextToScreen(f"{Assistantname} : {Answer}")
                 SetAssistantStatus("Answering ... ")
                 TextToSpeech(Answer)
                 return True
@@ -159,7 +159,7 @@ def MainExecution():
             elif "exit" in Queries:
                 QueryFinal = "Okay, Bye!"
                 Answer = ChatBot(QueryModifier(QueryFinal))
-                showTextToScreen(f"{Assistantname} : {Answer}")
+                ShowTextToScreen(f"{Assistantname} : {Answer}")
                 SetAssistantStatus("Answering ... ")
                 TextToSpeech(Answer)
                 SetAssistantStatus("Answering ... ")
