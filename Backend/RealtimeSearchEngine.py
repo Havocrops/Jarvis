@@ -35,7 +35,7 @@ def GoogleSearch(query):
 
 def AnswerModifier(Answer):
     lines = Answer.split('\n')
-    non_empty_lines = [line for line in lines if line.strip]
+    non_empty_lines = [line for line in lines if line.strip()]
     modified_answer = '\n'.join(non_empty_lines)
     return modified_answer
 
@@ -46,6 +46,7 @@ SystemChatBot = [
 ]
 
 def Information():
+    date = ""
     current_datetime = datetime.datetime.now()
     day = current_datetime.strftime("%A")
     date = current_datetime.strftime("%d")
@@ -55,12 +56,11 @@ def Information():
     minute = current_datetime.strftime("%M")
     second = current_datetime.strftime("%S")
 
-    data = f"Please use this real-time information if needed,\n"
+    data = f"Use This Real-time information if needed,\n"
     data += f"Day: {day}\n"
     data += f"Date: {date}\n"
     data += f"Month: {month}\n"
     data += f"Year: {year}\n"
-    data += f"Day: {day}\nDate: {date}\nMonth: {month}\nYear: {year}\n"
     data += f"Time: {hour} hours :{minute} minutes :{second} seconds.\n"
     return data
 
@@ -74,14 +74,14 @@ def RealtimeSearchEngine(prompt):
     SystemChatBot.append({"role": "system", "content": GoogleSearch(prompt)})
 
     completion = client.chat.completions.create(
-          model="llama3-70b-8192",
-          messages=SystemChatBot + [{"role": "system", "content": Information()}] + messages,
-          max_tokens=2048,
-          temperature=0.7,
-          top_p=1,
-          stream=True,
-          stop=None
-        )
+        model="llama3-70b-8192",
+        messages=SystemChatBot + [{"role": "system", "content": Information()}] + messages,
+        temperature=0.7,
+        max_tokens=2048,
+        top_p=1,
+        stream=True,
+        stop=None
+    )
     
     Answer =""
 
@@ -89,7 +89,7 @@ def RealtimeSearchEngine(prompt):
         if chunk.choices[0].delta.content:
             Answer += chunk.choices[0].delta.content
 
-    Answer = Answer.strip().replace("</s","")
+    Answer = Answer.strip().replace("</s>", "")
     messages.append({"role": "assistant", "content": Answer})
 
     with open(r"Data\ChatLog.json", "w") as f:
