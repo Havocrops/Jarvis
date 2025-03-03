@@ -37,6 +37,7 @@ def GoogleSearch(Topic):
     return True
 
 def Content(Topic):
+
     def OpenNotepad(File):
         default_text_editor = 'notepad.exe'
         subprocess.Popen([default_text_editor, File])
@@ -93,7 +94,7 @@ def OpenApp(app, sess=requests.session()):
         def extract_links(html):
             if html is None:
                 return []
-            soup = BeautifulSoup(html, "htnl.parser")
+            soup = BeautifulSoup(html, "html.parser")
             links = soup.find_all('a', {'jsname': 'UWckNb'})
             return [link.get('href') for link in links]
         
@@ -122,6 +123,7 @@ def OpenApp(app, sess=requests.session()):
             return True
         
 def CloseApp(app):
+
     if "chrome" in app:
         pass
     else:
@@ -157,6 +159,7 @@ def System(command):
     return True
 
 async def TranslateAndExecute(commands: list[str]):
+
     funcs = []
 
     for command in commands:
@@ -194,9 +197,13 @@ async def TranslateAndExecute(commands: list[str]):
         elif command.startswith("google search "):
             fun = asyncio.to_thread(GoogleSearch, command.removeprefix("google search "))
             funcs.append(fun)
+        
+        elif command.startswith("youtube search "):
+            fun = asyncio.to_thread(YouTubeSearch, command.removeprefix("youtube search "))
+            funcs.append(fun)
 
         elif command.startswith("system "):
-            fun = asyncio.to_thread(CloseApp, command.removeprefix("system "))
+            fun = asyncio.to_thread(System, command.removeprefix("system "))
             funcs.append(fun)
 
         else:
@@ -216,5 +223,6 @@ async def Automation(commands: list[str]):
         pass
 
     return True
+
 if __name__ == "__main__":
-    asyncio.run(Automation(["open chrome", "google search python", "content AI development"]))
+     asyncio.run(Automation(["open chrome", "google search python", "content AI development"]))   
