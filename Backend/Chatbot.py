@@ -25,17 +25,9 @@ SystemChatBot = [
 
 try:
     with open(r"Data\ChatLog.json", "r") as f:
-        # Check if the file is empty or invalid
-        content = f.read().strip()
-        if content == "":
-            messages = []  # Initialize an empty list if the file is empty
-        else:
-            try:
-                messages = load(f)  # Attempt to load the JSON data
-            except JSONDecodeError:
-                messages = []  # Initialize an empty list if the JSON is invalid
-except (FileNotFoundError, JSONDecodeError):
-    # If the file doesn't exist or is invalid, initialize an empty list
+        messages = load(f)
+except FileNotFoundError:
+
     with open(r"Data\ChatLog.json", "w") as f:
         dump([], f)
 
@@ -65,14 +57,8 @@ def ChatBot(Query):
 
     try:
         with open(r"Data\ChatLog.json", "r") as f:
-            content = f.read().strip()
-            if content == "":
-                messages = []  # Initialize an empty list if the file is empty
-            else:
-                f.seek(0)
-                messages = load(f)  # Attempt to load the JSON data
+            messages = load(f)  
 
-        # Append the user's query with a proper 'role'
         messages.append({"role": "user", "content": Query})
 
         completion = client.chat.completions.create(
@@ -93,16 +79,15 @@ def ChatBot(Query):
 
         Answer = Answer.replace("</s>", "")
 
-        # Append the assistant's response with the correct 'role'
         messages.append({"role": "assistant", "content": Answer})
 
-        # Save the updated chat log
         with open(r"Data\ChatLog.json", "w") as f:
             dump(messages, f, indent=4)
 
         return AnswerModifier(Answer=Answer)
 
     except Exception as e:
+
         print(f"Error: {e}")
         with open(r"Data\ChatLog.json", "w") as f:
             dump([], f, indent=4)
