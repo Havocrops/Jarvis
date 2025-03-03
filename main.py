@@ -113,57 +113,57 @@ def MainExecution():
                 run(Automation(list(Decision)))
                 TaskExecution = True
         
-    if ImageExecution == True:
+        if ImageExecution == True:
 
-        with open(r"Frontend\Files\ImageGeneration.data", "w") as file:
-            file.write(f"{ImageGenerationQuery},True")
+            with open(r"Frontend\Files\ImageGeneration.data", "w") as file:
+                file.write(f"{ImageGenerationQuery},True")
 
-        try:
-            p1 = subprocess.Popen(['python', r'Backend\ImageGeneration.py'],
-                                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                stdin=subprocess.PIPE, shell=False)
-            subprocesses.append(p1)
+            try:
+                p1 = subprocess.Popen(['python', r'Backend\ImageGeneration.py'],
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    stdin=subprocess.PIPE, shell=False)
+                subprocesses.append(p1)
 
-        except Exception as e:
-            print(f"Error starting ImageGeneration.py: {e}")
+            except Exception as e:
+                print(f"Error starting ImageGeneration.py: {e}")
 
-    if G and R or R:
-        SetAssistantStatus("Searching ...")
-        Answer = RealtimeSearchEngine(QueryModifier(Mearged_query))
-        ShowTextToScreen(f"{Assistantname} : {Answer}")
-        SetAssistantStatus("Answering ... ")
-        TextToSpeech(Answer)
-        return True
-    
-    else:
-        for Queries in Decision:
+        if G and R or R:
+            SetAssistantStatus("Searching ...")
+            Answer = RealtimeSearchEngine(QueryModifier(Mearged_query))
+            ShowTextToScreen(f"{Assistantname} : {Answer}")
+            SetAssistantStatus("Answering ... ")
+            TextToSpeech(Answer)
+            return True
+        
+        else:
+            for Queries in Decision:
 
-            if "general" in Queries:
-                SetAssistantStatus("Thinking ... ")
-                QueryFinal = Queries.replace("general ","")
-                Answer = ChatBot(QueryModifier(QueryFinal))
-                ShowTextToScreen(f"{Assistantname} : {Answer}")
-                SetAssistantStatus("Answering ... ")
-                TextToSpeech(Answer)
-                return True
-            
-            elif "realtime" in Queries:
-                SetAssistantStatus("Searching ... ")
-                QueryFinal = Queries.replace("realtime ","")
-                Answer = RealtimeSearchEngine(QueryModifier(QueryFinal))
-                ShowTextToScreen(f"{Assistantname} : {Answer}")
-                SetAssistantStatus("Answering ... ")
-                TextToSpeech(Answer)
-                return True
-            
-            elif "exit" in Queries:
-                QueryFinal = "Okay, Bye!"
-                Answer = ChatBot(QueryModifier(QueryFinal))
-                ShowTextToScreen(f"{Assistantname} : {Answer}")
-                SetAssistantStatus("Answering ... ")
-                TextToSpeech(Answer)
-                SetAssistantStatus("Answering ... ")
-                os._exit(1)
+                if "general" in Queries:
+                    SetAssistantStatus("Thinking ... ")
+                    QueryFinal = Queries.replace("general ","")
+                    Answer = ChatBot(QueryModifier(QueryFinal))
+                    ShowTextToScreen(f"{Assistantname} : {Answer}")
+                    SetAssistantStatus("Answering ... ")
+                    TextToSpeech(Answer)
+                    return True
+                
+                elif "realtime" in Queries:
+                    SetAssistantStatus("Searching ... ")
+                    QueryFinal = Queries.replace("realtime ","")
+                    Answer = RealtimeSearchEngine(QueryModifier(QueryFinal))
+                    ShowTextToScreen(f"{Assistantname} : {Answer}")
+                    SetAssistantStatus("Answering ... ")
+                    TextToSpeech(Answer)
+                    return True
+                
+                elif "exit" in Queries:
+                    QueryFinal = "Okay, Bye!"
+                    Answer = ChatBot(QueryModifier(QueryFinal))
+                    ShowTextToScreen(f"{Assistantname} : {Answer}")
+                    SetAssistantStatus("Answering ... ")
+                    TextToSpeech(Answer)
+                    SetAssistantStatus("Answering ... ")
+                    os._exit(1)
 
 def FirstThread():
 
