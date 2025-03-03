@@ -39,6 +39,7 @@ def TTS(Text, func=lambda r=None: True):
 
         finally:
             try:
+
                 func(False)
                 pygame.mixer.music.stop
                 pygame.mixer.quit()
@@ -80,5 +81,5 @@ def TextToSpeech(Text, func=lambda r=None: True):
 
 if __name__ == "__main__":
     while True:
-        TextToSpeech(input("Enter the text: "))
-                
+        
+        TextToSpeech(input("Enter the text: "))              
