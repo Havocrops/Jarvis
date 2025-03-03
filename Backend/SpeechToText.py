@@ -53,21 +53,21 @@ HtmlCode =str(HtmlCode).replace("recognition.lang= '';", f"recognition.lang = '{
 with open(r"Data\Voice.html", "w") as f:
     f.write(HtmlCode)
 
-    currrent_dir = os.getcwd()
+currrent_dir = os.getcwd()
 
-    Link = f"{currrent_dir}/Data/Voice.html"
+Link = f"{currrent_dir}/Data/Voice.html"
 
-    chrome_options = Options()
-    user_agent = "Mozilla/5.0(Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0142.86 Safari/537.36"
-    chrome_options.add_argument(f"user=agent={user_agent}")
-    chrome_options.add_argument("--use-fake-ui-for-media-stream")
-    chrome_options.add_argument("--use-fake-device-for-media-stream")
-    chrome_options.add_argument("--headless=now")
+chrome_options = Options()
+user_agent = "Mozilla/5.0(Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0142.86 Safari/537.36"
+chrome_options.add_argument(f"user=agent={user_agent}")
+chrome_options.add_argument("--use-fake-ui-for-media-stream")
+chrome_options.add_argument("--use-fake-device-for-media-stream")
+chrome_options.add_argument("--headless=now")
 
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
-    TempDirPath = rf"{currrent_dir}/Frontend/Files"
+TempDirPath = rf"{currrent_dir}/Frontend/Files"
 
 def SetAssistantStatus(Status):
     with open(rf'{TempDirPath}/Status.data', "w", encoding='utf-8') as file:
@@ -80,9 +80,16 @@ def QueryModifier(Query):
 
     if any(word +" " in new_query for word in question_words):
         if query_words[-1][-1] in ['.', '?', "!"]:
+            new_query = new_query[:-1] + "?"
+        else:
+            new_query += "?"    
+    else:
+
+        if query_words[-1][-1] in ['.', '?', "!"]:
             new_query = new_query[:-1] + "."
         else:
             new_query += "."
+
     return new_query.capitalize()
 
 def UniversalTranslator(Text):
@@ -90,6 +97,7 @@ def UniversalTranslator(Text):
     return english_translation.capitalize()
 
 def SpeechRecognition():
+
     driver.get("file:///" + Link) 
     driver.find_element(by=By.ID, value="start").click()
 
@@ -111,5 +119,6 @@ def SpeechRecognition():
 
 if __name__ == "__main__":
     while True:
+        
         Text = SpeechRecognition()
         print(Text)
