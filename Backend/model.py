@@ -51,6 +51,7 @@ ChatHistory = [
 ]
 
 def FirstLayerDMM(prompt: str = "test"):
+
     messages.append({"role": "user", "content": f"{prompt}"})
 
     stream = co.chat_stream(
@@ -90,5 +91,6 @@ def FirstLayerDMM(prompt: str = "test"):
         return response
 
 if __name__ == '__main__':
+
     while True:
-        print(FirstLayerDMM(input(">>>")))
+        print(FirstLayerDMM(input(">>> ")))
