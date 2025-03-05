@@ -32,14 +32,14 @@ async def query(payload):
     return response.content
 
 async def generate_images(prompt: str):
-    tasks = []  # Initialize tasks as an empty list
+    tasks = []
 
     for _ in range(4):
         payload = {
             "inputs": f"{prompt}, quality=4K, sharpness=maximum, Ultra High details, high resolution, seed={randint(0, 1000000)}"
         }
-        task = asyncio.create_task(query(payload))  # Create individual task for each query
-        tasks.append(task)  # Append task to the list
+        task = asyncio.create_task(query(payload))
+        tasks.append(task)
 
     Image_bytes_list = await asyncio.gather(*tasks)
 
@@ -52,7 +52,9 @@ def GenerateImages(prompt: str):
     open_images(prompt)
 
 while True:
+
     try:
+
         with open(r"Frontend\Files\ImageGeneration.data", "r") as f:
             Data: str = f.read()
 
@@ -70,5 +72,4 @@ while True:
             sleep(1)
 
     except :
-        pass
-        
+        pass 
